@@ -11,6 +11,7 @@ Configure or detect sensors.
   Amperimeter
   airspeed
   
+  
 Configure a flight:
   -Flight mode: manual operation or preconfigured time.
   -Security options configuration
@@ -34,6 +35,10 @@ Flight analysis:
 Model configuration.
   -Store all previous configurations by model.
   -allow use camera to store a photo of the model.
+
+Other tools:
+  -Given a cable length measure speed counting laps with a phone button or tactile button.
+  -Crash wall of fame. (self explanatory). Possibility of share.
   
   
   
