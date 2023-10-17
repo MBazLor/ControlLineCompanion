@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_speedo" />
 
     <Button
-        android:id="@+id/manual"
+        android:id="@+id/btn_manual"
         android:layout_width="148dp"
         android:layout_height="53dp"
         android:layout_marginTop="24dp"
@@ -70,8 +70,8 @@
         android:layout_width="153dp"
         android:layout_height="62dp"
         android:text="Configured flight"
-        app:layout_constraintEnd_toEndOf="@+id/manual"
-        app:layout_constraintStart_toStartOf="@+id/manual"
-        app:layout_constraintTop_toBottomOf="@+id/manual" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_manual"
+        app:layout_constraintStart_toStartOf="@+id/btn_manual"
+        app:layout_constraintTop_toBottomOf="@+id/btn_manual" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

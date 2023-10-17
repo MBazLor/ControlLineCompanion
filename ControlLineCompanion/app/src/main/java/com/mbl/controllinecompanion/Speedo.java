@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Speedo extends AppCompatActivity {
 
-    TextView btn_start, btn_lap, txt_speed;
+    TextView btn_start, btn_lap, txt_speed, input_cable_length;
     boolean isRunning = false;
     boolean timeIsSet = false;
     long currentTime ;
@@ -31,6 +31,9 @@ public class Speedo extends AppCompatActivity {
         btn_start = findViewById(R.id.btn_start);
         btn_lap = findViewById(R.id.btn_lap);
         txt_speed = findViewById(R.id.txt_speed);
+
+        input_cable_length = findViewById(R.id.input_cable_length);
+
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +61,19 @@ public class Speedo extends AppCompatActivity {
                     return;
                 }
 
+                if(input_cable_length.getText().toString().equals("")){
+                    cableLength = 20;
+
+                }else{
+                    cableLength = Long.parseLong(input_cable_length.getText().toString());
+                }
+
+
                 long lapTimeMillis = chrono.getTimeElapsed() - currentTime;
                 double lapTimeSecs = (double)lapTimeMillis/1000.0;
                 double distanceMeters = 2 * 3.1416 * cableLength;
 
-
+                Log.d("Cable length: ", String.valueOf(cableLength));
                 Log.d("Distance: ", String.valueOf(distanceMeters));
                 Log.d("Lap time", String.valueOf(lapTimeMillis));
                 Log.d("Lap time secs", String.valueOf(lapTimeSecs));
