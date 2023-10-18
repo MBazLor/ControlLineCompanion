@@ -24,8 +24,10 @@ public class ManualFlight extends AppCompatActivity {
     Thread Thread1 = null;
     public static final int SERVERPORT = 6666;
     public static final String SERVERIP = "192.168.1.105";
-    TextView btn_connect, txt_status;
+    TextView btn_connect, txt_status, btn_send;
     private TcpClient mTcpClient;
+    boolean sendFlag = false;
+    String msg = "";
 
 
     @Override
@@ -37,6 +39,7 @@ public class ManualFlight extends AppCompatActivity {
 
         txt_status = findViewById(R.id.txt_status);
         btn_connect = findViewById(R.id.btn_connect);
+        btn_send = findViewById(R.id.btn_send);
         UIHandler =  new Handler();
 
         btn_connect.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +47,19 @@ public class ManualFlight extends AppCompatActivity {
             public void onClick(View view) {
                txt_status.setText("Connecting...");
                Thread1.start();
+            }
+        });
+
+        btn_send.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Log.d("socket output", "Waiting...");
+                while(sendFlag == true){
+                    //wait if data is being sent, we do not want to alter msg
+                }
+                msg = "test=1";
+                sendFlag = true;
+                Log.d("socket output", "data ready to be sent");
             }
         });
     }
@@ -57,7 +73,9 @@ public class ManualFlight extends AppCompatActivity {
                 Log.d("socket thread", "Started connection");
                 UIHandler.post(new updateUIThread("Connected"));
                 Thread2 commThread = new Thread2(socket);
+                Thread3 sendThread = new Thread3(socket);
                 new Thread(commThread).start();
+                new Thread(sendThread).start();
                 return;
             } catch (IOException e){
                 e.printStackTrace();
@@ -68,11 +86,12 @@ public class ManualFlight extends AppCompatActivity {
     class Thread2 implements Runnable {
         private Socket clientSocket;
         private BufferedReader input;
+
         public Thread2(Socket clientSocket){
             this.clientSocket = clientSocket;
             try {
                 this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-                
+                //this.output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.clientSocket.getOutputStream())), true);
             }   catch (IOException e){
                 e.printStackTrace();
             }
@@ -80,7 +99,6 @@ public class ManualFlight extends AppCompatActivity {
 
         public void run(){
             while (!Thread.currentThread().isInterrupted()){
-
                 try {
                     String read = input.readLine();
                     if(read != null){
@@ -92,6 +110,7 @@ public class ManualFlight extends AppCompatActivity {
                         Thread1.start();
                         return;
                     }
+
                 } catch (IOException e){
                     e.printStackTrace();
                 }
@@ -99,16 +118,43 @@ public class ManualFlight extends AppCompatActivity {
         }
     }
 
+    class Thread3 implements Runnable {
+        private Socket clientSocket;
+
+        private PrintWriter output;
+        public Thread3(Socket clientSocket){
+            this.clientSocket = clientSocket;
+            try {
+
+                this.output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.clientSocket.getOutputStream())), true);
+            }   catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        public void run(){
+            while (!Thread.currentThread().isInterrupted()){
+
+                    if(sendFlag == true){
+                        Log.d("socket output", "Sending...");
+                        output.write(msg);
+                        sendFlag = false;
+                        Log.d("socket output", "Data sent, flag set to false, ready to new message");
+                    }
+            }
+        }
+    }
+
     class updateUIThread implements Runnable {
-        private String msg;
+        private String data;
 
         public updateUIThread(String str){
-            this.msg = str;
+            this.data = data;
         }
 
         @Override
         public void run() {
-
+            txt_status.setText("Connected");
         }
     }
 
