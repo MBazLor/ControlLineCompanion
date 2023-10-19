@@ -16,9 +16,8 @@ public class ManualFlight extends AppCompatActivity {
     Handler UIHandler;
     Thread socketCreationThread = null;
     public static final int SERVERPORT = 6666;
-    public static final String SERVERIP = "192.168.1.105";
+    public static final String SERVERIP = "192.168.4.66";
     TextView btn_connect, txt_status, btn_motorStart, btn_motorStop;
-    private TcpClient mTcpClient;
     boolean sendFlag = false;
     String msg = "";
     String payload= "probando!!";
@@ -53,7 +52,7 @@ public class ManualFlight extends AppCompatActivity {
                 while(sendFlag == true){
                     //wait if data is being sent, we do not want to alter msg
                 }
-                payload = "thr=1800";
+                payload = "thr=1800;";
                 sendFlag = true;
                 Log.d("socket output", "data ready to be sent");
             }
@@ -66,7 +65,7 @@ public class ManualFlight extends AppCompatActivity {
                 while(sendFlag == true){
                     //wait if data is being sent, we do not want to alter msg
                 }
-                payload = "thr=1000";
+                payload = "thr=1000;";
                 sendFlag = true;
                 Log.d("socket output", "data ready to be sent");
             }
@@ -94,7 +93,7 @@ public class ManualFlight extends AppCompatActivity {
                         while(true){
                             if(sendFlag){
                                 msg = payload;
-                                dataStreamOut.writeUTF(msg);
+                                dataStreamOut.writeBytes(msg);
                                 dataStreamOut.flush();
                                 sendFlag = false;
                             }
