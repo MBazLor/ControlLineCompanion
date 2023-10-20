@@ -44,19 +44,36 @@
         android:id="@+id/btn_motorStart"
         android:layout_width="134dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="104dp"
         android:text="Motor Start"
         app:layout_constraintBottom_toTopOf="@+id/btn_motorStop"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_motorStop"
-        android:layout_width="205dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="144dp"
+        android:layout_width="249dp"
+        android:layout_height="142dp"
+        android:layout_marginBottom="100dp"
         android:text="Motor Stop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sld_throttle"
+        android:layout_width="158dp"
+        android:layout_height="47dp"
+        android:rotation="-90"
+        android:stepSize="1"
+        android:value="1900"
+        android:valueFrom="1500"
+        android:valueTo="2000"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_motorStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_motorStart"
+        app:layout_constraintTop_toTopOf="@+id/btn_motorStart" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

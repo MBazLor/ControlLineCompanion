@@ -1,5 +1,6 @@
 package com.mbl.controllinecompanion;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +12,8 @@ import java.net.Socket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.slider.Slider;
+
 public class ManualFlight extends AppCompatActivity {
 
     Handler UIHandler;
@@ -18,6 +21,7 @@ public class ManualFlight extends AppCompatActivity {
     public static final int SERVERPORT = 6666;
     public static final String SERVERIP = "192.168.4.66";
     TextView btn_connect, txt_status, btn_motorStart, btn_motorStop;
+    Slider sld_throttle;
     boolean sendFlag = false;
     String msg = "";
     String payload= "probando!!";
@@ -34,7 +38,9 @@ public class ManualFlight extends AppCompatActivity {
         btn_connect = findViewById(R.id.btn_connect);
         btn_motorStart = findViewById(R.id.btn_motorStart);
         btn_motorStop = findViewById(R.id.btn_motorStop);
+        sld_throttle = findViewById(R.id.sld_throttle);
 
+        sld_throttle.setValue(1900); //Initial value
         UIHandler =  new Handler();
 
         btn_connect.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +58,8 @@ public class ManualFlight extends AppCompatActivity {
                 while(sendFlag == true){
                     //wait if data is being sent, we do not want to alter msg
                 }
-                payload = "thr=1800;";
+                Log.d("slider value", Integer.toString((int) sld_throttle.getValue() ));
+                payload = "thr="+ Integer.toString( (int) sld_throttle.getValue() ) +";\n";
                 sendFlag = true;
                 Log.d("socket output", "data ready to be sent");
             }
@@ -65,7 +72,7 @@ public class ManualFlight extends AppCompatActivity {
                 while(sendFlag == true){
                     //wait if data is being sent, we do not want to alter msg
                 }
-                payload = "thr=1000;";
+                payload = "thr=1000;\n";
                 sendFlag = true;
                 Log.d("socket output", "data ready to be sent");
             }
@@ -92,10 +99,13 @@ public class ManualFlight extends AppCompatActivity {
                         String msg = "";
                         while(true){
                             if(sendFlag){
+                                Log.d("tcp socket", "starting to send payload");
+                                Log.d("tcp payload", payload);
                                 msg = payload;
                                 dataStreamOut.writeBytes(msg);
                                 dataStreamOut.flush();
                                 sendFlag = false;
+                                Log.d("tcp socket", "payload sent");
                             }
                         }
                     }catch(Exception e){
@@ -103,11 +113,6 @@ public class ManualFlight extends AppCompatActivity {
                     }
                 }).start();
 
-
-                /*Thread2 commThread = new Thread2(socket);
-                Thread3 sendThread = new Thread3(socket);
-                new Thread(commThread).start();
-                new Thread(sendThread).start();*/
                 return;
             } catch (IOException e){
                 e.printStackTrace();
@@ -115,67 +120,6 @@ public class ManualFlight extends AppCompatActivity {
         }
     }
 
-    /*class Thread2 implements Runnable {
-        private Socket clientSocket;
-        private BufferedReader input;
-
-        public Thread2(Socket clientSocket){
-            this.clientSocket = clientSocket;
-            try {
-                this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-                //this.output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.clientSocket.getOutputStream())), true);
-            }   catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-
-        public void run(){
-            while (!Thread.currentThread().isInterrupted()){
-                try {
-                    String read = input.readLine();
-                    if(read != null){
-                        //UIHandler.post(new updateUIThread(read));
-                        Log.d("Server say", read);
-                    }
-                    else {
-                        Thread1 = new Thread(new Thread1());
-                        Thread1.start();
-                        return;
-                    }
-
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
-
-    /*class Thread3 implements Runnable {
-        private Socket clientSocket;
-
-        private PrintWriter output;
-        public Thread3(Socket clientSocket){
-            this.clientSocket = clientSocket;
-            try {
-
-                this.output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(this.clientSocket.getOutputStream())), true);
-            }   catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-
-        public void run(){
-            while (!Thread.currentThread().isInterrupted()){
-
-                    if(sendFlag == true){
-                        Log.d("socket output", "Sending...");
-                        output.write(msg);
-                        sendFlag = false;
-                        Log.d("socket output", "Data sent, flag set to false, ready to new message");
-                    }
-            }
-        }
-    }*/
 
     class updateUIThread implements Runnable {
         private String data;
@@ -187,6 +131,7 @@ public class ManualFlight extends AppCompatActivity {
         @Override
         public void run() {
             txt_status.setText("Connected");
+            txt_status.setTextColor(Color.rgb(0,255,0));
         }
     }
 
