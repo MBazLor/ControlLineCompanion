@@ -1,5 +1,5 @@
 # ControlLineCompanion
-## Aplicacion para android que permite configurar el vuelo para aviones RC y generar estadisticas y datos útiles
+## Aplicacion para android que permite configurar el vuelo para aviones de vuelo circular y generar estadisticas y datos útiles
 
 ## TODO Features
 
