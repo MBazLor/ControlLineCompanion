@@ -19,16 +19,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class ManualFlight extends AppCompatActivity {
-    Handler UIHandler;
-    Thread socketCreationThread = null;
-    public static final int SERVERPORT = 6666;
-    public static final String SERVERIP = "192.168.4.66";
-    TextView btn_connect, txt_status, btn_motorStart, btn_motorStop;
-    Slider sld_throttle;
-    boolean sendFlag = false;
-    String msg = "";
-    String payload= "probando!!";
 
+/*
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +103,8 @@ public class ManualFlight extends AppCompatActivity {
         public void run() {
             Socket socket = null;
             try {
-                //InetAddress serverAddr = InetAddress.getByName(SERVERIP);
-                InetAddress serverAddr = InetAddress.getByName("192.168.1.102");
+                InetAddress serverAddr = InetAddress.getByName(SERVERIP);
+                //InetAddress serverAddr = InetAddress.getByName("192.168.1.102");
                 socket = new Socket(serverAddr, SERVERPORT);
 
                 Log.d("socket thread", "Started connection");
@@ -160,6 +152,6 @@ public class ManualFlight extends AppCompatActivity {
             txt_status.setText("Connected");
             txt_status.setTextColor(Color.rgb(0,255,0));
         }
-    }
+    }*/
 
 }

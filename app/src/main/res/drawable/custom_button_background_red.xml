@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Estado presionado -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#C80202" />
+            <corners android:radius="8dp" />
+            <stroke android:width="2dp" android:color="#AF0101" />
+        </shape>
+    </item>
+
+    <!-- Estado enfocado (para navegación con teclado/D-pad) -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FF0000" />
+            <corners android:radius="8dp" />
+            <stroke android:width="3dp" android:color="#A00101" />
+        </shape>
+    </item>
+
+    <!-- Estado deshabilitado -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#D56F6F" />
+            <corners android:radius="8dp" />
+            <stroke android:width="2dp" android:color="#FB6868" />
+        </shape>
+    </item>
+
+    <!-- Estado por defecto  -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#E21313" />
+            <corners android:radius="8dp" />
+            <stroke android:width="2dp" android:color="#870202" />
+        </shape>
+    </item>
+
+</selector>
