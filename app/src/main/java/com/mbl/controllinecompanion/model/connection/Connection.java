@@ -1,5 +1,7 @@
 package com.mbl.controllinecompanion.model.connection;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.mbl.controllinecompanion.MainActivity;
@@ -54,7 +56,8 @@ public class Connection implements Runnable {
             socket.connect(new InetSocketAddress(SERVERIP, SERVERPORT), 2000);
             //socket = new Socket(SERVERIP, SERVERPORT);
             DataOutputStream dataStreamOut = new DataOutputStream(socket.getOutputStream());
-            for (ConnectionListener l : listeners) l.onConnected(); //Listeners notify
+            //for (ConnectionListener l : listeners) l.onConnected(); //Listeners notify
+            notifyConnected(); //Notification extracted to a method
             Log.d("socket thread", "Started connection");
             status = true;
             //dataStreamOut = new DataOutputStream(socket.getOutputStream());
@@ -86,12 +89,13 @@ public class Connection implements Runnable {
         } catch (UnknownHostException e){
             status = false;
             Log.d("connection", "Error, host desconocido");
-            for (ConnectionListener l : listeners) l.onError("Unable to connect to receiver"); //Listeners notify
-
+            //for (ConnectionListener l : listeners) l.onError("Unable to connect to receiver"); //Listeners notify
+            notifyError("Unable to connect to receiver");
         } catch (IOException e) {
             status = false;
             Log.d("connection", e.getMessage());
-            for (ConnectionListener l : listeners) l.onError("Unable to connect to receiver"); //Listeners notify
+            notifyError("Unable to connect to receiver");
+            //for (ConnectionListener l : listeners) l.onError("Unable to connect to receiver"); //Listeners notify
         } catch (Exception e) {
             status = false;
             Log.d("connection", e.toString());
@@ -122,5 +126,33 @@ public class Connection implements Runnable {
     public void removeListener(ConnectionListener listener){
         listeners.remove(listener);
     }
+
+
+    /**
+     * Notify error to registered listeners
+     * @param message
+     */
+    public void notifyError(String message) {
+        // Ensure execution on main loop, needed to update UI
+        new Handler(Looper.getMainLooper()).post(() -> {
+            for (ConnectionListener listener : listeners) {
+                listener.onError(message);
+            }
+        });
+    }
+
+
+    /**
+     * Notify connected to registered listeners
+     */
+    public void notifyConnected() {
+        // Ensure this is executed on main loop.
+        new Handler(Looper.getMainLooper()).post(() -> {
+            for (ConnectionListener listener : listeners) {
+                listener.onConnected();
+            }
+        });
+    }
+
 
 }
