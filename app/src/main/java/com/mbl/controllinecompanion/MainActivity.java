@@ -22,7 +22,7 @@ import com.mbl.controllinecompanion.model.connection.ConnectionListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, MainActivityInterface {
 
-    TextView  btn_connect,status_text;
+    TextView btn_connect, status_text;
     ImageButton btn_options;
     Connection connection;
     Payload payload;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Handler handler;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .commit();
         }
 
-
     }
 
     /**
      * Manage click events on buttons
+     *
      * @param view
      */
 
@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         int id = view.getId();
         //If button connect, create a new connection thread
-        if(id == R.id.button_connect){
+        if (id == R.id.button_connect) {
             Log.d("MainActivity", "connection status: " + connection.getStatus());
-            if(connection.getStatus()) {//if is connected
+            if (connection.getStatus()) {//if is connected
 
                 connection.shutDown();
                 runOnUiThread(() -> {
@@ -78,8 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         btn_connect.setBackground(getDrawable(R.drawable.custom_button_background));
                     }
                 });
-            }
-            else {
+            } else {
                 runOnUiThread(() -> {
                     status_text.setTextColor(getResources().getColor(R.color.orange));
                     status_text.setText("Connecting...");
@@ -88,11 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 connectorThread = new Thread(connection);
                 connectorThread.start();
             }
-        } else if(id == R.id.button_options){
+        } else if (id == R.id.button_options) {
             showFragment(new AircraftListFragment());
         }
     }
-
 
 
     /**
@@ -103,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onConnected() {
         try {
-            runOnUiThread( () -> {
+            runOnUiThread(() -> {
                 status_text.setText("Connected");
                 status_text.setTextColor(0xFF01FF00);
                 btn_connect.setText("Disconnect");
@@ -119,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onError(String error) {
-        try{
-            runOnUiThread( () -> {
+        try {
+            runOnUiThread(() -> {
                 status_text.setText("Disconnected");
                 status_text.setTextColor(0xFFF02828);
                 btn_connect.setText("Connect");
@@ -130,10 +128,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Connection error").setMessage("Unable to connect to receiver. Check WIFI is active and connected to the right network");
+                builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
                 builder.create().show();
 
             });
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -141,24 +140,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Méthod to change fragments.
      * This allows one fragment to call another.
+     *
      * @param fragment
      */
     public void showFragment(Fragment fragment) {
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragments_container, fragment)
                 .setCustomAnimations(
                         R.anim.slide_in_right,
                         R.anim.slide_out_left,
                         R.anim.slide_in_left,
                         R.anim.slide_out_right
                 )
+                .replace(R.id.fragments_container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
 
     /**
      * Interface method to get connection status from a fragment.
+     *
      * @return
      */
     @Override
