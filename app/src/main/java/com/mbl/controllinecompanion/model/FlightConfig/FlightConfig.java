@@ -1,4 +1,7 @@
-package com.mbl.controllinecompanion.model;
+package com.mbl.controllinecompanion.model.FlightConfig;
+
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class FlightConfig {
     int id;
@@ -10,6 +13,9 @@ public class FlightConfig {
     int rpmTarget;
 
     public FlightConfig(){
+        this(0, 1500, false, 0.0f, false, 0);
+
+
     }
 
     public FlightConfig(int timer, int throttle, boolean autoThrottle, float autoThrottleFactor, boolean adjustThrRpm, int rpmTarget) {
@@ -19,6 +25,7 @@ public class FlightConfig {
         this.autoThrottleFactor = autoThrottleFactor;
         this.adjustThrRpm = adjustThrRpm;
         this.rpmTarget = rpmTarget;
+
     }
 
     public int getId() {
@@ -63,5 +70,6 @@ public class FlightConfig {
     public void setRpmTarget(int rpmTarget) {
         this.rpmTarget = rpmTarget;
     }
+
 
 }

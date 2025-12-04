@@ -1,6 +1,6 @@
 package com.mbl.controllinecompanion.model.aircraft;
 
-import com.mbl.controllinecompanion.model.FlightConfig;
+import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;
 
 public class Aircraft {
 

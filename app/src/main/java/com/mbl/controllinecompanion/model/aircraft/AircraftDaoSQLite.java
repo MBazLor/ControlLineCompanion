@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.mbl.controllinecompanion.model.FlightConfig;
+import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;
 
 import java.util.Collections;
 import java.util.List;
