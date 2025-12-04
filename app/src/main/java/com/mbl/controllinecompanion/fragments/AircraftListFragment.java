@@ -4,22 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.mbl.controllinecompanion.MainActivity;
+
 import com.mbl.controllinecompanion.NewAircraftActivity;
 import com.mbl.controllinecompanion.R;
+import com.mbl.controllinecompanion.model.aircraft.Aircraft;
+import com.mbl.controllinecompanion.model.aircraft.AircraftAdapter;
+import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;
+import com.mbl.controllinecompanion.model.aircraft.IAircraftDAO;
+
+import java.util.List;
 
 
 public class AircraftListFragment extends Fragment {
 
 
     Button btn_new;
+    List<Aircraft> aircrafts;
+    IAircraftDAO aircraftDAO;
+
+    AircraftAdapter adapter;
+    RecyclerView recyclerView;
     public static AircraftListFragment newInstance() {
         AircraftListFragment fragment = new AircraftListFragment();
         return fragment;
@@ -27,14 +41,30 @@ public class AircraftListFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_aircraft_list, container, false);
+
+        recyclerView = view.findViewById(R.id.rv_aircraft_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        //Get all aircrafts from database
+        aircraftDAO = new AircraftDaoSQLite(this.getContext());
+        aircrafts = aircraftDAO.getAllAircraft();
+
+        adapter = new AircraftAdapter(aircrafts);
+        recyclerView.setAdapter(adapter);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_aircraft_list, container, false);
+        return view;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

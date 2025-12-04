@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import com.mbl.controllinecompanion.model.aircraft.Aircraft;
+import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;
 import com.mbl.controllinecompanion.model.aircraft.IAircraftDAO;
 
 import java.io.File;
@@ -45,6 +46,8 @@ public class NewAircraftActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_aircraft);
 
+        aircraftDAO = new AircraftDaoSQLite(this);
+
         image = findViewById(R.id.image_aircraft);
         nameField = findViewById(R.id.text_name);
         wingspanField = findViewById(R.id.text_wingspan);
@@ -52,6 +55,9 @@ public class NewAircraftActivity extends AppCompatActivity {
 
         findViewById(R.id.button_gallery).setOnClickListener(v -> abrirGaleria());
         findViewById(R.id.button_photo).setOnClickListener(v -> tomarFoto());
+        findViewById(R.id.button_save).setOnClickListener(v -> saveAircraft());
+        findViewById(R.id.button_cancel).setOnClickListener(v -> finish());
+
 
     }
 
