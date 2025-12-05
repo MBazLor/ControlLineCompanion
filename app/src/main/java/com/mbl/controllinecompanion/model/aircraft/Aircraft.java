@@ -51,6 +51,9 @@ public class Aircraft {
         this.lineLength = lineLength;
     }
     public FlightConfig getFlightConfig() {
+        if(flightConfig == null){
+            flightConfig = new FlightConfig();
+        }
         return flightConfig;
     }
     public void setFlightConfig(FlightConfig flightConfig) {

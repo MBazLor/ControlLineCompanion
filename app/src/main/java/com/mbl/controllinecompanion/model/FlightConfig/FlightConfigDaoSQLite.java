@@ -9,20 +9,32 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.mbl.controllinecompanion.model.aircraft.Aircraft;
+import com.mbl.controllinecompanion.model.database.AppDatabase;
+import com.mbl.controllinecompanion.model.database.DatabaseParams;
 
-public class FlightConfigDaoSQLite extends SQLiteOpenHelper implements IFlightConfigDAO{
+public class FlightConfigDaoSQLite  implements IFlightConfigDAO{
 
-    private static final String DATABASE_NAME = "clcompanion.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_FLIGHT_CONFIG = "flight_config";
+    private static final String DATABASE_NAME = DatabaseParams.DATABASE_NAME;
+    private static final int DATABASE_VERSION = DatabaseParams.DATABASE_VERSION;
+    private static final String TABLE_FLIGHT_CONFIG = DatabaseParams.TABLE_FLIGHT_CONFIG;
+
+    private final AppDatabase dbHelper;
+
+
 
     public FlightConfigDaoSQLite(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        dbHelper = new AppDatabase(context);
+        //super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Add a new FlightConfig to the database
+     * @param fc
+     * @return id of inserted element
+     */
     @Override
     public void addFlightConfig(FlightConfig fc) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db =dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("timer", fc.getTimer());
         values.put("throttle", fc.getThrottle());
@@ -30,14 +42,14 @@ public class FlightConfigDaoSQLite extends SQLiteOpenHelper implements IFlightCo
         values.put("auto_throttle_factor", fc.getAutoThrottleFactor());
         values.put("adjust_thr_rpm", fc.isAdjustThrRpm());
         values.put("rpm_target", fc.rpmTarget);
-        db.insert(TABLE_FLIGHT_CONFIG, null, values);
-        db.close();
+        int id = (int) db.insert(TABLE_FLIGHT_CONFIG, null, values);
+
 
     }
 
     @Override
     public void updateFlightConfig(FlightConfig fc) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db =dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("timer", fc.getTimer());
         values.put("throttle", fc.getThrottle());
@@ -46,12 +58,12 @@ public class FlightConfigDaoSQLite extends SQLiteOpenHelper implements IFlightCo
         values.put("adjust_thr_rpm", fc.isAdjustThrRpm());
         values.put("rpm_target", fc.rpmTarget);
         db.update(TABLE_FLIGHT_CONFIG, values, "id=?", new String[]{String.valueOf(fc.getId())});
-        db.close();
+
     }
 
     @Override
     public void deleteFlightConfig(FlightConfig fc) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db =dbHelper.getWritableDatabase();
         db.delete(TABLE_FLIGHT_CONFIG, "id=?", new String[]{String.valueOf(fc.getId())});
     }
 
@@ -59,48 +71,22 @@ public class FlightConfigDaoSQLite extends SQLiteOpenHelper implements IFlightCo
     public FlightConfig getFlightConfig(int id) {
 
         FlightConfig fc = new FlightConfig();
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * from " + TABLE_FLIGHT_CONFIG +" WHERE id = " + id ;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT * from " + TABLE_FLIGHT_CONFIG +" WHERE " + "id = " + id ;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            fc.setId(cursor.getInt(0));
-            fc.setTimer(cursor.getInt(1));
-            fc.setThrottle(cursor.getInt(2));
-            fc.setAutoThrottle(cursor.getInt(3) == 1);
-            fc.setAutoThrottleFactor(cursor.getFloat(4));
-            fc.setAdjustThrRpm(cursor.getInt(5) == 1);
-            fc.setRpmTarget(cursor.getInt(6));
+            fc.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+            fc.setTimer(cursor.getInt(cursor.getColumnIndexOrThrow("timer")));
+            fc.setThrottle(cursor.getInt(cursor.getColumnIndexOrThrow("throttle")));
+            fc.setAutoThrottle(cursor.getInt(cursor.getColumnIndexOrThrow("auto_throttle")) == 1);
+            fc.setAutoThrottleFactor(cursor.getFloat(cursor.getColumnIndexOrThrow("auto_throttle_factor")));
+            fc.setAdjustThrRpm(cursor.getInt(cursor.getColumnIndexOrThrow("adjust_thr_rpm")) == 1);
+            fc.setRpmTarget(cursor.getInt(cursor.getColumnIndexOrThrow("rpm_target")));
         }
-        db.close();
+        cursor.close();
+
 
         return fc;
     }
-
-    //TODO is needed?
-    @Override
-    public int getIdFromDb() {
-        return 0;
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(
-                "CREATE TABLE " + TABLE_FLIGHT_CONFIG + " ( "
-                        + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                        + "timer INTEGER,"
-                        + "throttle INTEGER,"
-                        + "auto_throttle INTEGER,"
-                        + "auto_throttle_factor REAL,"
-                        + "adjust_thr_rpm INTEGER,"
-                        + "rpm_target INTEGER"
-                        + ")"
-        );
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-    }
-
 
 }
