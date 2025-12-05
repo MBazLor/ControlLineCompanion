@@ -8,6 +8,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+
+import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;
 import com.mbl.controllinecompanion.model.aircraft.Aircraft;
 import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;
 import com.mbl.controllinecompanion.model.aircraft.IAircraftDAO;
@@ -77,10 +79,14 @@ public class NewAircraftActivity extends AppCompatActivity {
     }
     private void saveAircraft(){
         Aircraft aircraft = new Aircraft();
+        FlightConfig fc = new FlightConfig();
+
+        aircraft.setFlightConfig(fc);
         aircraft.setName(nameField.getText().toString());
         aircraft.setWingspan(Float.parseFloat(wingspanField.getText().toString()));
         aircraft.setLineLength(Float.parseFloat(lineLengthField.getText().toString()));
-        aircraft.setImage(fotoUri.toString());
+        if (fotoUri != null)
+            aircraft.setImage(fotoUri.toString());
         aircraftDAO.addAircraft(aircraft);
     }
 

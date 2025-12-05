@@ -19,6 +19,7 @@ import com.mbl.controllinecompanion.fragments.ManualFlightFragment;
 import com.mbl.controllinecompanion.model.Payload;
 import com.mbl.controllinecompanion.model.connection.Connection;
 import com.mbl.controllinecompanion.model.connection.ConnectionListener;
+import com.mbl.controllinecompanion.model.database.AppDatabase;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, MainActivityInterface {
 
@@ -44,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_connect = findViewById(R.id.button_connect);
         btn_options.setOnClickListener(this);
         btn_connect.setOnClickListener(this);
-
+        //debug
+        AppDatabase dbHelper = new AppDatabase(this);
+        dbHelper.getReadableDatabase();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
