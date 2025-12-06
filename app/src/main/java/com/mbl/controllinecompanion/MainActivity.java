@@ -1,5 +1,8 @@
 package com.mbl.controllinecompanion;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,8 +10,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,14 +22,18 @@ import androidx.fragment.app.Fragment;
 import com.mbl.controllinecompanion.fragments.AircraftListFragment;
 import com.mbl.controllinecompanion.fragments.FirstFragment;
 import com.mbl.controllinecompanion.fragments.ManualFlightFragment;
+import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
 import com.mbl.controllinecompanion.model.Payload;
+import com.mbl.controllinecompanion.model.aircraft.Aircraft;
+import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;
 import com.mbl.controllinecompanion.model.connection.Connection;
 import com.mbl.controllinecompanion.model.connection.ConnectionListener;
 import com.mbl.controllinecompanion.model.database.AppDatabase;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, MainActivityInterface {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, MainActivityInterface, OnAircraftSelectedListener {
 
-    TextView btn_connect, status_text;
+    TextView btn_connect, status_text,tv_plane_name;
+    ImageView iv_plane_image;
     ImageButton btn_options;
     Connection connection;
     Payload payload;
@@ -35,11 +45,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        connection = Connection.getInstance();
+        connection = Connection.getInstance(); //Connection singleton instance Runnable on individual thread
         connection.addListener(this);
 
-        payload = Payload.getInstance();
+        payload = Payload.getInstance(); //Singleton instance that manages data sent to receiver
 
+        tv_plane_name = findViewById(R.id.tv_plane_name);
+        iv_plane_image = findViewById(R.id.iv_plane_image);
         status_text = findViewById(R.id.status_text);
         btn_options = findViewById(R.id.button_options);
         btn_connect = findViewById(R.id.button_connect);
@@ -54,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .replace(R.id.fragments_container, new FirstFragment())
                     .commit();
         }
+
 
     }
 
@@ -186,4 +199,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onKeyDown(keyCode, event);
     }
 
+
+
+    private void refreshUi(){
+        SharedPreferences prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        int selectedAircraftId = prefs.getInt("selected_aircraft_id", -1);
+        if(selectedAircraftId != -1){
+            AircraftDaoSQLite AircraftDaoSQLite = new AircraftDaoSQLite(this);
+            Aircraft aircraft = AircraftDaoSQLite.getAircraft(selectedAircraftId);
+            if(aircraft != null){
+                tv_plane_name.setText(aircraft.getName());
+                //iv_plane_image.setImageURI(Uri.parse(aircraft.getImage()));
+            }
+        }
+    }
+
+
+    @Override
+    public void onAircraftSelected(int aircraftId) {
+        refreshUi();
+    }
 }

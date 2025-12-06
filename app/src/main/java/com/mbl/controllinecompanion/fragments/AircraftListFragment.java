@@ -1,5 +1,6 @@
 package com.mbl.controllinecompanion.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -34,6 +35,9 @@ public class AircraftListFragment extends Fragment {
 
     AircraftAdapter adapter;
     RecyclerView recyclerView;
+
+    private OnAircraftSelectedListener listener;
+
     public static AircraftListFragment newInstance() {
         AircraftListFragment fragment = new AircraftListFragment();
         return fragment;
@@ -41,11 +45,7 @@ public class AircraftListFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AircraftListFragment extends Fragment {
         aircraftDAO = new AircraftDaoSQLite(this.getContext());
         aircrafts = aircraftDAO.getAllAircraft();
 
-        adapter = new AircraftAdapter(aircrafts);
+        adapter = new AircraftAdapter(aircrafts, listener);
         recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
@@ -77,4 +77,23 @@ public class AircraftListFragment extends Fragment {
             startActivity(i);
         });
     }
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnAircraftSelectedListener) {
+            listener = (OnAircraftSelectedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " debe implementar OnAircraftSelectedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
 }

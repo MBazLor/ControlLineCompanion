@@ -1,5 +1,8 @@
 package com.mbl.controllinecompanion.model.aircraft;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mbl.controllinecompanion.MainActivity;
 import com.mbl.controllinecompanion.R;
+import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
 
 import java.util.List;
 
@@ -17,26 +22,29 @@ import java.util.List;
  */
 public class AircraftAdapter extends RecyclerView.Adapter<AircraftAdapter.ViewHolder> {
     private List<Aircraft> aircraftList;
+    private OnAircraftSelectedListener listener;
 
-    public AircraftAdapter(List<Aircraft> aircraftList) {
+    public AircraftAdapter(List<Aircraft> aircraftList, OnAircraftSelectedListener listener) {
         this.aircraftList = aircraftList;
+        this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvWingspan;
+        TextView tvName, tvWingspan,tvLineLength;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvWingspan = itemView.findViewById(R.id.tv_wingspan);
+            tvLineLength = itemView.findViewById(R.id.tvLineLength);
         }
+
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_aicraft, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_aicraft, parent, false);
         return new ViewHolder(view);
     }
 
@@ -45,6 +53,20 @@ public class AircraftAdapter extends RecyclerView.Adapter<AircraftAdapter.ViewHo
         Aircraft aircraft = aircraftList.get(position);
         holder.tvName.setText(aircraft.getName());
         holder.tvWingspan.setText(String.valueOf(aircraft.getWingspan()));
+        holder.tvLineLength.setText(String.valueOf(aircraft.getLineLength()));
+
+        holder.itemView.setOnClickListener(v -> {
+            SharedPreferences prefs = v.getContext().getSharedPreferences(
+                    "app_prefs", Context.MODE_PRIVATE);
+
+            prefs.edit()
+                    .putInt("selected_aircraft_id", aircraft.getId())
+                    .apply();
+            if(listener != null){
+                listener.onAircraftSelected(aircraft.getId());
+            }
+            ((MainActivity) v.getContext()).getSupportFragmentManager().popBackStack();
+        });
     }
 
     @Override
