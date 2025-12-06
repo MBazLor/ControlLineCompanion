@@ -61,13 +61,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppDatabase dbHelper = new AppDatabase(this);
         dbHelper.getReadableDatabase();
 
+        refreshUi();
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragments_container, new FirstFragment())
                     .commit();
         }
-
-
     }
 
     /**

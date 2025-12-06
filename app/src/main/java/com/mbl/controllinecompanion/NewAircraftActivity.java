@@ -59,8 +59,6 @@ public class NewAircraftActivity extends AppCompatActivity {
         findViewById(R.id.button_photo).setOnClickListener(v -> tomarFoto());
         findViewById(R.id.button_save).setOnClickListener(v -> saveAircraft());
         findViewById(R.id.button_cancel).setOnClickListener(v -> finish());
-
-
     }
 
     private void abrirGaleria() {
@@ -88,6 +86,7 @@ public class NewAircraftActivity extends AppCompatActivity {
         if (fotoUri != null)
             aircraft.setImage(fotoUri.toString());
         aircraftDAO.addAircraft(aircraft);
+        finish();
     }
 
 }
