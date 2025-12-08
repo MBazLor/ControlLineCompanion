@@ -3,6 +3,7 @@ package com.mbl.controllinecompanion.model.aircraft;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mbl.controllinecompanion.MainActivity;
+import com.mbl.controllinecompanion.NewAircraftActivity;
 import com.mbl.controllinecompanion.R;
 import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
 import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;
@@ -85,7 +87,13 @@ public class AircraftAdapter extends RecyclerView.Adapter<AircraftAdapter.ViewHo
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (which == 0) {
-                                // TODO: Handle Edit
+                                Context context = v.getContext();
+                                Intent intent = new Intent(context, NewAircraftActivity.class);
+                                intent.putExtra("aircraft_id", aircraft.getId());
+                                intent.putExtra("update", true);
+
+                                if (context instanceof Activity)
+                                context.startActivity(intent);
                             } else {
                                 //TODO move DAO instance to methods in class
                                 FlightConfig fc = aircraft.getFlightConfig();

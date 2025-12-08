@@ -25,7 +25,7 @@ public class NewAircraftActivity extends AppCompatActivity {
     EditText nameField, wingspanField, lineLengthField;
 
     private IAircraftDAO aircraftDAO; //Data access object for aircraft
-
+    Aircraft aircraft;
     private ActivityResultLauncher<String> pickImageLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(),
                     uri -> {
@@ -55,6 +55,16 @@ public class NewAircraftActivity extends AppCompatActivity {
         nameField = findViewById(R.id.text_name);
         wingspanField = findViewById(R.id.text_wingspan);
         lineLengthField = findViewById(R.id.text_line_length);
+
+        if (getIntent().getBooleanExtra("update", false)) {
+            int aircraftId = getIntent().getIntExtra("aircraft_id", -1);
+            aircraft = aircraftDAO.getAircraft(aircraftId);
+            nameField.setText(aircraft.getName());
+            image.setImageURI(Uri.parse(aircraft.getImage()));
+            wingspanField.setText(String.valueOf(aircraft.getWingspan()));
+            lineLengthField.setText(String.valueOf(aircraft.getLineLength()));
+            fotoUri = Uri.parse(aircraft.getImage());
+        }
 
         findViewById(R.id.button_gallery).setOnClickListener(v -> abrirGaleria());
         findViewById(R.id.button_photo).setOnClickListener(v -> tomarFoto());
@@ -93,16 +103,24 @@ public class NewAircraftActivity extends AppCompatActivity {
         }
     }
     private void saveAircraft(){
-        Aircraft aircraft = new Aircraft();
-        FlightConfig fc = new FlightConfig();
+        if(aircraft == null){
+            Aircraft aircraft = new Aircraft();
+            FlightConfig fc = new FlightConfig();
+            aircraft.setFlightConfig(fc);
+        }
 
-        aircraft.setFlightConfig(fc);
         aircraft.setName(nameField.getText().toString());
         aircraft.setWingspan(Float.parseFloat(wingspanField.getText().toString()));
         aircraft.setLineLength(Float.parseFloat(lineLengthField.getText().toString()));
         if (fotoUri != null)
             aircraft.setImage(fotoUri.toString());
-        aircraftDAO.addAircraft(aircraft);
+        if (getIntent().getBooleanExtra("update", false)){
+            aircraftDAO.updateAircraft(aircraft);
+        }
+        else{
+            aircraftDAO.addAircraft(aircraft);
+        }
+
         finish();
     }
 

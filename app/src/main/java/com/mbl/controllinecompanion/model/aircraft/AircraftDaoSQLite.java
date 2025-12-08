@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;
 import com.mbl.controllinecompanion.model.FlightConfig.FlightConfigDaoSQLite;
@@ -75,6 +76,7 @@ public class AircraftDaoSQLite  implements IAircraftDAO{
         values.put("image", aircraft.getImage());
         values.put("line_length", aircraft.getLineLength());
         values.put("flight_config", aircraft.getFlightConfig().getId());
+        Log.i("AircraftDaoSQLite", "Updating aircraft with id: " + aircraft.getId());
         int filas = db.update(TABLE_AIRCRAFTS, values, "id=?", new String[]{String.valueOf(aircraft.getId())});
 
     }
