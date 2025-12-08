@@ -1,6 +1,7 @@
 package com.mbl.controllinecompanion;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.EditText;
 import android.widget.ImageView;
 import androidx.activity.EdgeToEdge;
@@ -67,10 +68,26 @@ public class NewAircraftActivity extends AppCompatActivity {
 
     private void tomarFoto() {
         try {
-            File archivo = File.createTempFile("foto_avion_", ".jpg", getCacheDir());
-            fotoUri = FileProvider.getUriForFile(this,
-                    getPackageName() + ".provider", archivo);
+            // Carpeta propia y persistente para tus fotos
+            File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File archivo = File.createTempFile(
+                    "foto_avion_",
+                    ".jpg",
+                    dir
+            );
+
+            fotoUri = FileProvider.getUriForFile(
+                    this,
+                    getPackageName() + ".provider",
+                    archivo
+            );
+
             takePhotoLauncher.launch(fotoUri);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

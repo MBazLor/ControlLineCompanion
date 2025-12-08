@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Estado presionado -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#505050" />
+            <corners android:radius="8dp" />
+            <stroke android:width="2dp" android:color="#1B1B1B" />
+        </shape>
+    </item>
+
+    <!-- Estado enfocado (para navegación con teclado/D-pad) -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#3A3E42" />
+            <corners android:radius="8dp" />
+            <stroke android:width="3dp" android:color="#656D7C" />
+        </shape>
+    </item>
+
+    <!-- Estado deshabilitado -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#525151" />
+            <corners android:radius="8dp" />
+            <stroke android:width="2dp" android:color="#1D1D1D" />
+        </shape>
+    </item>
+
+    <!-- Estado por defecto  -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#D1D1D1" />
+            <corners android:radius="8dp" />
+            <stroke android:width="2dp" android:color="#0D0D0D" />
+        </shape>
+    </item>
+
+    <!-- Icono de fondo -->
+    <item android:gravity="center|start" android:left="12dp">
+        <bitmap
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:tileMode="disabled"
+            android:src="@android:drawable/ic_menu_zoom" />
+    </item>
+
+</layer-list>

@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Aircraft aircraft = AircraftDaoSQLite.getAircraft(selectedAircraftId);
             if(aircraft != null){
                 tv_plane_name.setText(aircraft.getName());
-                //iv_plane_image.setImageURI(Uri.parse(aircraft.getImage()));
+                iv_plane_image.setImageURI(Uri.parse(aircraft.getImage()));
             }
         }
     }

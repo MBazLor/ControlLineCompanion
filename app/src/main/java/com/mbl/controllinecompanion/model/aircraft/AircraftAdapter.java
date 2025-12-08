@@ -3,9 +3,11 @@ package com.mbl.controllinecompanion.model.aircraft;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,12 +33,14 @@ public class AircraftAdapter extends RecyclerView.Adapter<AircraftAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvWingspan,tvLineLength;
+        ImageView ivImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvWingspan = itemView.findViewById(R.id.tv_wingspan);
             tvLineLength = itemView.findViewById(R.id.tvLineLength);
+            ivImage = itemView.findViewById(R.id.iv_image);
         }
 
     }
@@ -54,7 +58,9 @@ public class AircraftAdapter extends RecyclerView.Adapter<AircraftAdapter.ViewHo
         holder.tvName.setText(aircraft.getName());
         holder.tvWingspan.setText(String.valueOf(aircraft.getWingspan()));
         holder.tvLineLength.setText(String.valueOf(aircraft.getLineLength()));
-
+        if(aircraft.getImage() != null) {
+            holder.ivImage.setImageURI(Uri.parse(aircraft.getImage()));
+        }
         holder.itemView.setOnClickListener(v -> {
             SharedPreferences prefs = v.getContext().getSharedPreferences(
                     "app_prefs", Context.MODE_PRIVATE);
@@ -72,5 +78,10 @@ public class AircraftAdapter extends RecyclerView.Adapter<AircraftAdapter.ViewHo
     @Override
     public int getItemCount() {
         return aircraftList.size();
+    }
+
+    public void setData(List<Aircraft> newAircraftList) {
+        this.aircraftList = newAircraftList;
+        notifyDataSetChanged();
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import java.util.List;
 public class AircraftListFragment extends Fragment {
 
 
-    Button btn_new;
+    Button btn_new, btn_update;
     List<Aircraft> aircrafts;
     IAircraftDAO aircraftDAO;
 
@@ -71,11 +72,14 @@ public class AircraftListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         btn_new = view.findViewById(R.id.button_new);
+        btn_update = view.findViewById(R.id.btn_update);
+
 
         btn_new.setOnClickListener( v -> {
             Intent i = new Intent(getActivity(),NewAircraftActivity.class);
             startActivity(i);
         });
+        btn_update.setOnClickListener(v -> refreshList());
     }
 
 
@@ -94,6 +98,16 @@ public class AircraftListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshList();
+    }
+
+    public void refreshList(){
+        adapter.setData(aircraftDAO.getAllAircraft());
     }
 
 }
