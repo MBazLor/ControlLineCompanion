@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,7 +19,7 @@ public class FlightModesFragment extends Fragment {
 
     private FragmentFlightModesBinding binding;
 
-    Button btn_auto, btn_manual;
+    TextView btn_auto, btn_manual;
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,

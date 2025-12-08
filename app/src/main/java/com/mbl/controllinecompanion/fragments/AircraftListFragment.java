@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.mbl.controllinecompanion.NewAircraftActivity;
@@ -30,7 +31,7 @@ import java.util.List;
 public class AircraftListFragment extends Fragment {
 
 
-    Button btn_new, btn_update;
+    TextView btn_new;
     List<Aircraft> aircrafts;
     IAircraftDAO aircraftDAO;
 
@@ -71,15 +72,14 @@ public class AircraftListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btn_new = view.findViewById(R.id.button_new);
-        btn_update = view.findViewById(R.id.btn_update);
+        btn_new = view.findViewById(R.id.tv_button_new);
 
 
         btn_new.setOnClickListener( v -> {
             Intent i = new Intent(getActivity(),NewAircraftActivity.class);
             startActivity(i);
         });
-        btn_update.setOnClickListener(v -> refreshList());
+
     }
 
 

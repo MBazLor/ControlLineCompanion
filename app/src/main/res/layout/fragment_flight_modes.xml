@@ -6,33 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FlightModesFragment" >
 
-    <Button
+    <TextView
         android:id="@+id/button_manual_flight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/custom_main_button"
+        android:gravity="center_horizontal|center_vertical"
         android:text="Manual flight"
+        android:textColor="@color/material_dynamic_neutral10"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/button_timed_flight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/button_timed_flight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/custom_main_button"
         android:enabled="false"
+        android:gravity="center_horizontal|center_vertical"
         android:text="Timed Flight"
+        android:textColor="@color/material_dynamic_neutral10"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@id/button_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_manual_flight" />
 
-    <Button
+    <TextView
         android:id="@+id/button_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/custom_main_button"
         android:enabled="false"
+        android:gravity="center_horizontal|center_vertical"
         android:text="Back"
+        android:textColor="@color/material_dynamic_neutral10"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

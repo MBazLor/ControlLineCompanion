@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.slider.Slider;
 import com.mbl.controllinecompanion.R;
@@ -26,7 +27,7 @@ import com.mbl.controllinecompanion.model.connection.Connection;
 
 public class ManualFlightFragment extends Fragment {
 
-   Button btn_motorSend, btn_motorStop;
+   TextView btn_motorSend, btn_motorStop;
    Slider sld_throttle;
 
    private Connection connection = null;

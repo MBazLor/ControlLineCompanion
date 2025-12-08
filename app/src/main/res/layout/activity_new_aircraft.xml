@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:fitsSystemWindows="true"
     android:background="#565555"
     tools:context=".NewAircraftActivity">
 
@@ -26,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:inputType="number"
+        android:hint="18.5"
+        android:inputType="numberDecimal"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@+id/text_wingspan"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,7 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:inputType="number"
+        android:hint="1.6"
+        android:inputType="numberDecimal"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="@+id/text_name"
         app:layout_constraintHorizontal_bias="0.464"
@@ -64,8 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
+        android:hint="Plane name"
         android:inputType="text"
-        android:text="Name"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.696"
@@ -88,39 +92,60 @@
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:background="@drawable/item_background"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_plane_img" />
 
-    <Button
+    <TextView
         android:id="@+id/button_gallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_main_button"
+        android:gravity="center_horizontal|center_vertical"
+        android:minWidth="100dp"
+        android:minHeight="40dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
         android:text="Gallery"
+        android:textColor="@color/cardview_dark_background"
         app:layout_constraintBottom_toBottomOf="@+id/button_photo"
         app:layout_constraintEnd_toStartOf="@+id/button_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button_photo" />
 
-    <Button
+    <TextView
         android:id="@+id/button_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:minHeight="40dp"
+        android:minWidth="100dp"
+        android:background="@drawable/custom_main_button"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
         android:text="Take photo"
+        android:textColor="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_gallery"
         app:layout_constraintTop_toBottomOf="@+id/image_aircraft" />
 
-    <Button
+    <TextView
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_main_button"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:minHeight="45dp"
+        android:minWidth="100dp"
+        android:textColor="@color/cardview_dark_background"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,10 +153,17 @@
         app:layout_constraintTop_toBottomOf="@+id/text_line_length"
         app:layout_constraintVertical_bias="0.453" />
 
-    <Button
+    <TextView
         android:id="@+id/button_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_main_button"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:minHeight="45dp"
+        android:minWidth="100dp"
+        android:textColor="@color/cardview_dark_background"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="@+id/button_save"
         app:layout_constraintEnd_toStartOf="@+id/button_save"

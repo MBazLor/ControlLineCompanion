@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.button_connect) {
             Log.d("MainActivity", "connection status: " + connection.getStatus());
             if (connection.getStatus()) {//if is connected
-
                 connection.shutDown();
                 runOnUiThread(() -> {
                     status_text.setTextColor(getResources().getColor(R.color.red));
@@ -104,7 +103,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 connectorThread.start();
             }
         } else if (id == R.id.button_options) {
-            showFragment(new AircraftListFragment());
+            Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragments_container);
+            if (!(current instanceof AircraftListFragment)){
+                showFragment(new AircraftListFragment());
+            }
+
         }
     }
 
