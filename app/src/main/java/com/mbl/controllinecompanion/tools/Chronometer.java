@@ -12,12 +12,17 @@ public class Chronometer extends TextView {
     @SuppressWarnings("unused")
     private static final String TAG = "Chronometer";
 
+    // MODIFICADO: La interfaz ahora notifica el "tick" y cuando el tiempo termina.
     public interface OnChronometerTickListener {
-
         void onChronometerTick(Chronometer chronometer);
+        void onChronometerFinish(Chronometer chronometer);
     }
 
-    private long mBase;
+    // AÑADIDO: Tiempo total de la cuenta atrás en milisegundos.
+    private long mMillisInFuture;
+    // AÑADIDO: Tiempo en el futuro cuando la cuenta atrás terminará.
+    private long mFutureTime;
+
     private boolean mVisible;
     private boolean mStarted;
     private boolean mRunning;
@@ -25,7 +30,7 @@ public class Chronometer extends TextView {
 
     private static final int TICK_WHAT = 2;
 
-    private long timeElapsed;
+    private long timeElapsed; // AHORA REPRESENTA EL TIEMPO RESTANTE
 
     public Chronometer(Context context) {
         this (context, null, 0);
@@ -37,23 +42,22 @@ public class Chronometer extends TextView {
 
     public Chronometer(Context context, AttributeSet attrs, int defStyle) {
         super (context, attrs, defStyle);
-
         init();
     }
 
     private void init() {
-        mBase = SystemClock.elapsedRealtime();
-        updateText(mBase);
+        // La inicialización ahora es más simple, el tiempo se establece después.
     }
 
-    public void setBase(long base) {
-        mBase = base;
-        dispatchChronometerTick();
+    // MODIFICADO: setBase ya no es necesario. Lo reemplazamos por setMillisInFuture.
+    public void setMillisInFuture(long millisInFuture) {
+        this.mMillisInFuture = millisInFuture;
+        mFutureTime = SystemClock.elapsedRealtime() + this.mMillisInFuture;
         updateText(SystemClock.elapsedRealtime());
     }
 
-    public long getBase() {
-        return mBase;
+    public long getMillisInFuture() {
+        return mMillisInFuture;
     }
 
     public void setOnChronometerTickListener(
@@ -66,6 +70,8 @@ public class Chronometer extends TextView {
     }
 
     public void start() {
+        // AÑADIDO: Al empezar, recalculamos el tiempo futuro para ser precisos.
+        mFutureTime = SystemClock.elapsedRealtime() + mMillisInFuture;
         mStarted = true;
         updateRunning();
     }
@@ -75,6 +81,11 @@ public class Chronometer extends TextView {
         updateRunning();
     }
 
+    // AÑADIDO: Un método para reiniciar la cuenta atrás.
+    public void reset() {
+        stop(); // Detiene el bucle.
+        setMillisInFuture(this.mMillisInFuture); // Restablece el tiempo.
+    }
 
     public void setStarted(boolean started) {
         mStarted = started;
@@ -95,13 +106,25 @@ public class Chronometer extends TextView {
         updateRunning();
     }
 
+    // MODIFICADO: La lógica para calcular y mostrar el tiempo ha cambiado por completo.
     private synchronized void updateText(long now) {
-        timeElapsed = now - mBase;
+        long millisRemaining = mFutureTime - now;
+
+        if (millisRemaining <= 0) {
+            millisRemaining = 0;
+            // Detenemos el cronómetro y notificamos que ha terminado.
+            if (mRunning) { // Solo si estaba corriendo
+                stop();
+                dispatchChronometerFinish();
+            }
+        }
+
+        timeElapsed = millisRemaining; // Guardamos el tiempo restante.
 
         DecimalFormat df = new DecimalFormat("00");
 
-        int hours = (int)(timeElapsed / (3600 * 1000));
-        int remaining = (int)(timeElapsed % (3600 * 1000));
+        int hours = (int)(millisRemaining / (3600 * 1000));
+        int remaining = (int)(millisRemaining % (3600 * 1000));
 
         int minutes = (int)(remaining / (60 * 1000));
         remaining = (int)(remaining % (60 * 1000));
@@ -109,7 +132,8 @@ public class Chronometer extends TextView {
         int seconds = (int)(remaining / 1000);
         remaining = (int)(remaining % (1000));
 
-        int milliseconds = (int)(((int)timeElapsed % 1000) / 100);
+        // MODIFICADO: Las décimas de segundo se calculan sobre el tiempo restante.
+        int milliseconds = (int)(millisRemaining % 1000) / 100;
 
         String text = "";
 
@@ -128,6 +152,11 @@ public class Chronometer extends TextView {
         boolean running = mVisible && mStarted;
         if (running != mRunning) {
             if (running) {
+                // AÑADIDO: Asegurarse de que el tiempo futuro es correcto al reanudar.
+                if(timeElapsed > 0) {
+                    mFutureTime = SystemClock.elapsedRealtime() + timeElapsed;
+                }
+
                 updateText(SystemClock.elapsedRealtime());
                 dispatchChronometerTick();
                 mHandler.sendMessageDelayed(Message.obtain(mHandler,
@@ -156,8 +185,14 @@ public class Chronometer extends TextView {
         }
     }
 
+    void dispatchChronometerFinish() {
+        if (mOnChronometerTickListener != null) {
+            mOnChronometerTickListener.onChronometerFinish(this);
+        }
+    }
+
+
     public long getTimeElapsed() {
         return timeElapsed;
     }
-
 }

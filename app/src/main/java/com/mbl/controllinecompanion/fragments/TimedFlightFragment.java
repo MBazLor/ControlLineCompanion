@@ -3,15 +3,14 @@ package com.mbl.controllinecompanion.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.slider.Slider;
 import com.mbl.controllinecompanion.R;
@@ -23,23 +22,41 @@ import com.mbl.controllinecompanion.model.aircraft.Aircraft;
 import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;
 import com.mbl.controllinecompanion.model.aircraft.IAircraftDAO;
 import com.mbl.controllinecompanion.model.connection.Connection;
+import com.mbl.controllinecompanion.tools.Chronometer;
 
-public class ManualFlightFragment extends Fragment {
+public class TimedFlightFragment extends Fragment implements Chronometer.OnChronometerTickListener {
 
-   TextView btn_motorSend, btn_motorStop;
+    @Override
+    public void onChronometerTick(Chronometer chronometer) {
+
+    }
+
+    @Override
+    public void onChronometerFinish(Chronometer chronometer) {
+        chronometer.stop();
+        payload.setThrottle((short) 1000);
+        connection.sendPayload();
+    }
+
+    public interface OnMotorStopListener{
+        void onMotorStop();
+    }
+    private OnMotorStopListener motorStopListener;
+
+   TextView btn_start, btn_motorStop;
    Slider sld_throttle;
 
    private Connection connection = null;
    private Payload payload = null ;
    private Aircraft aircraft;
+   private Chronometer chrono;
 
-    public ManualFlightFragment() {
+    public TimedFlightFragment() {
         // Required empty public constructor
     }
 
-    public static ManualFlightFragment newInstance() {
-        ManualFlightFragment fragment = new ManualFlightFragment();
-
+    public static TimedFlightFragment newInstance() {
+        TimedFlightFragment fragment = new TimedFlightFragment();
         return fragment;
     }
 
@@ -64,15 +81,20 @@ public class ManualFlightFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manual_flight, container, false);
+        return inflater.inflate(R.layout.fragment_timed_flight, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btn_motorSend = view.findViewById(R.id.btn_start);
+        btn_start = view.findViewById(R.id.btn_start);
         btn_motorStop = view.findViewById(R.id.btn_motorStop);
         sld_throttle = view.findViewById(R.id.sld_throttle);
+        chrono = view.findViewById(R.id.chronometer2);
+
+        if(chrono != null);
+            chrono.setMillisInFuture(300000L);
+
 
 
         IFlightConfigDAO fcDao = new FlightConfigDaoSQLite(this.getContext());
@@ -81,16 +103,16 @@ public class ManualFlightFragment extends Fragment {
         Log.i("fc", String.valueOf(fc.getThrottle()));
         sld_throttle.setValue(fc.getThrottle());
 
-        btn_motorSend.setOnClickListener(v -> {
+        btn_start.setOnClickListener(v -> {
             payload.setThrottle((short) sld_throttle.getValue());
-            fc.setThrottle((short) sld_throttle.getValue());
-
+            chrono.start();
             connection.sendPayload();
         });
 
         btn_motorStop.setOnClickListener( v -> {
             payload.setThrottle((short) 1000);
             connection.sendPayload();
+            chrono.stop();
         });
 
         sld_throttle.addOnSliderTouchListener( new Slider.OnSliderTouchListener(){
@@ -108,6 +130,26 @@ public class ManualFlightFragment extends Fragment {
 
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof OnMotorStopListener){
+            motorStopListener = (OnMotorStopListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnMotorStopListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        motorStopListener = null;
+    }
 
+
+    public void stopChronoFromActivity(){
+        if(chrono != null){
+            chrono.stop();
+        }
+    }
 
 }

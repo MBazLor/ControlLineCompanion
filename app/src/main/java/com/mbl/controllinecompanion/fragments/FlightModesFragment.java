@@ -19,7 +19,7 @@ public class FlightModesFragment extends Fragment {
 
     private FragmentFlightModesBinding binding;
 
-    TextView btn_auto, btn_manual;
+    TextView btn_manual, btn_timed;
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -35,6 +35,8 @@ public class FlightModesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         btn_manual = view.findViewById(R.id.button_manual_flight);
+        btn_timed = view.findViewById(R.id.button_timed_flight);
+
 
         btn_manual.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
@@ -42,6 +44,14 @@ public class FlightModesFragment extends Fragment {
                 ((MainActivity) getActivity()).showFragment(new ManualFlightFragment());
             }
         });
+
+        btn_timed.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) {
+                //Llamada al método que cambia el fragment en main activity
+                ((MainActivity) getActivity()).showFragment(new TimedFlightFragment());
+            }
+        });
+
 
     }
 

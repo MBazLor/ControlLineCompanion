@@ -42,7 +42,7 @@ public class Speedo extends AppCompatActivity {
                     btn_start.setText("Start");
                 }
                 else {
-                    chrono.setBase(SystemClock.elapsedRealtime());
+//                    chrono.setBase(SystemClock.elapsedRealtime());
                     chrono.start();
                     isRunning = true;
                     btn_start.setText("Stop");

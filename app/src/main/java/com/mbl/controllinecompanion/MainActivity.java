@@ -23,6 +23,7 @@ import com.mbl.controllinecompanion.fragments.AircraftListFragment;
 import com.mbl.controllinecompanion.fragments.FirstFragment;
 import com.mbl.controllinecompanion.fragments.ManualFlightFragment;
 import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
+import com.mbl.controllinecompanion.fragments.TimedFlightFragment;
 import com.mbl.controllinecompanion.model.Payload;
 import com.mbl.controllinecompanion.model.aircraft.Aircraft;
 import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;
@@ -30,7 +31,7 @@ import com.mbl.controllinecompanion.model.connection.Connection;
 import com.mbl.controllinecompanion.model.connection.ConnectionListener;
 import com.mbl.controllinecompanion.model.database.AppDatabase;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, MainActivityInterface, OnAircraftSelectedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, MainActivityInterface, OnAircraftSelectedListener, TimedFlightFragment.OnMotorStopListener {
 
     TextView btn_connect, status_text,tv_plane_name;
     ImageView iv_plane_image;
@@ -192,10 +193,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("VolumeButton", "Botón Subir Volumen presionado");
                 payload.setThrottle((short) 1000);
                 connection.sendPayload();
+                onMotorStop();
                 return true;
             case KeyEvent.KEYCODE_VOLUME_DOWN:
                 payload.setThrottle((short) 1000);
                 connection.sendPayload();
+                onMotorStop();
                 return true; // Similar al caso de Subir Volumen
         }
         // Si no es una tecla de volumen que te interese, deja que el sistema la maneje
@@ -217,9 +220,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     @Override
     public void onAircraftSelected(int aircraftId) {
         refreshUi();
+    }
+
+    @Override
+    public void onMotorStop() {
+        Fragment current = getSupportFragmentManager().findFragmentById(R.id.fragments_container);
+        if (current instanceof TimedFlightFragment) {
+            ((TimedFlightFragment) current).stopChronoFromActivity();
+        }
+
     }
 }

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mbl.controllinecompanion.tools.Chronometer;
+
 public class Speedo extends AppCompatActivity {
 
     TextView btn_start, btn_lap, txt_speed, input_cable_length;
@@ -40,7 +42,7 @@ public class Speedo extends AppCompatActivity {
                     btn_start.setText("Start");
                 }
                 else {
-                    chrono.setBase(SystemClock.elapsedRealtime());
+                    //chrono.setBase(SystemClock.elapsedRealtime());
                     chrono.start();
                     isRunning = true;
                     btn_start.setText("Stop");
