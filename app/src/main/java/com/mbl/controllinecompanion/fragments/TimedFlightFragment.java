@@ -33,6 +33,7 @@ public class TimedFlightFragment extends Fragment implements Chronometer.OnChron
 
     @Override
     public void onChronometerFinish(Chronometer chronometer) {
+        Log.i("Chrono finished", "Stopping chrono and motor!");
         chronometer.stop();
         payload.setThrottle((short) 1000);
         connection.sendPayload();
@@ -93,9 +94,10 @@ public class TimedFlightFragment extends Fragment implements Chronometer.OnChron
         chrono = view.findViewById(R.id.chronometer2);
         chrono.setMode(Chronometer.Mode.TIMER);
 
+        chrono.setOnChronometerTickListener(this);
 
         if(chrono != null);
-            chrono.setCountdownDuration(300000L);
+            chrono.setCountdownDuration(10000L);
 
 
 
@@ -151,7 +153,9 @@ public class TimedFlightFragment extends Fragment implements Chronometer.OnChron
 
     public void stopChronoFromActivity(){
         if(chrono != null){
+            Log.i("Chrono finished", "Stopping chrono and motor!");
             chrono.stop();
+
         }
     }
 

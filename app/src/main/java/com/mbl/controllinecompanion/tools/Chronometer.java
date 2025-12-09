@@ -5,6 +5,7 @@ import android.icu.text.DecimalFormat;
 import android.os.Handler;import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 
 public class Chronometer extends TextView {
@@ -137,12 +138,15 @@ public class Chronometer extends TextView {
     // MODIFICADO: La lógica de actualización ahora depende del modo
     private synchronized void updateText(long now) {
         if (mMode == Mode.TIMER) {
+
             long millisRemaining = mFutureTime - now;
+            //Log.d("millisRemaining", String.valueOf(millisRemaining));
             if (millisRemaining <= 0) {
                 millisRemaining = 0;
                 if (mRunning) { // Solo si estaba corriendo
                     stop();
                     dispatchChronometerFinish();
+                    Log.d("chrono", "dispatching finish event");
                 }
             }
             mTimeValue = millisRemaining;
