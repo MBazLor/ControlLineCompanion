@@ -174,15 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
-    /**
-     * Interface method to get connection status from a fragment.
-     *
-     * @return
-     */
-    @Override
-    public boolean getConnectionStatus() {
-        return this.connection.getStatus();
-    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

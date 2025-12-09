@@ -25,8 +25,8 @@ public class SpeedoActivity extends AppCompatActivity {
         setContentView(R.layout.speedo);
 
         Chronometer chrono = (Chronometer) findViewById(R.id.txt_chrono);
-
         chrono.setMode(Chronometer.Mode.STOPWATCH);
+
         btn_start = findViewById(R.id.btn_start);
         btn_lap = findViewById(R.id.btn_lap);
         txt_speed = findViewById(R.id.txt_speed);
@@ -55,7 +55,7 @@ public class SpeedoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!timeIsSet ) {
-                    currentTime = chrono.getTimeElapsed();
+                    currentTime = chrono.getCurrentTime();
                     timeIsSet = true;
                     return;
                 }
@@ -68,7 +68,7 @@ public class SpeedoActivity extends AppCompatActivity {
                 }
 
 
-                long lapTimeMillis = chrono.getTimeElapsed() - currentTime;
+                long lapTimeMillis = chrono.getCurrentTime() - currentTime;
                 double lapTimeSecs = (double)lapTimeMillis/1000.0;
                 double distanceMeters = 2 * 3.1416 * cableLength;
 
@@ -82,7 +82,7 @@ public class SpeedoActivity extends AppCompatActivity {
                 Log.d("speed m/s", String.valueOf(speedMS));
                 Log.d("Speed km/h", String.valueOf(speedMS * 3.6));
                 txt_speed.setText(String.format("%.1f", speedMS * 3.6));
-                currentTime = chrono.getTimeElapsed();
+                currentTime = chrono.getCurrentTime();
             }
         });
     }

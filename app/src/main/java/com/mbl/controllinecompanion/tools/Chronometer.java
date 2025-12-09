@@ -8,34 +8,36 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 public class Chronometer extends TextView {
-    @SuppressWarnings("unused")
+
     private static final String TAG = "Chronometer";
 
-    // NUEVO: Definición de los modos de operación
     public enum Mode {
-        STOPWATCH, // Cronómetro hacia adelante
-        TIMER      // Temporizador/Cuenta atrás
+        STOPWATCH,
+        TIMER
     }
 
-    // MODIFICADO: La interfaz ahora notifica cuando el temporizador termina
+    /**
+     * Interface to notify chrono events
+     */
     public interface OnChronometerTickListener {
         void onChronometerTick(Chronometer chronometer);
         void onChronometerFinish(Chronometer chronometer); // Añadido para el modo TIMER
     }
 
-    // --- Variables para ambos modos ---
+    private OnChronometerTickListener mOnChronometerTickListener;
+
     private Mode mMode = Mode.STOPWATCH; // Por defecto, funciona como cronómetro
     private boolean mVisible;
     private boolean mStarted;
     private boolean mRunning;
-    private OnChronometerTickListener mOnChronometerTickListener;
-    private static final int TICK_WHAT = 2;
-    private long mTimeValue; // Almacena el tiempo base (stopwatch) o el tiempo restante (timer)
 
-    // --- Variables específicas del modo STOPWATCH ---
+    private static final int TICK_WHAT = 2;
+    private long mTimeValue; // Basetime (stopwatch) remaining time (timer)
+
+    // ---  STOPWATCH ---
     private long mBaseTime; // Tiempo de inicio del cronómetro
 
-    // --- Variables específicas del modo TIMER ---
+    // --- TIMER ---
     private long mFutureTime;       // Momento futuro en el que el temporizador termina
     private long mCountdownInterval; // Duración total de la cuenta atrás
 
@@ -57,12 +59,11 @@ public class Chronometer extends TextView {
         updateText(mBaseTime);
     }
 
-    // NUEVO: Método para establecer el modo de operación
+    // Set operation mode
     public void setMode(Mode mode) {
         this.mMode = mode;
     }
 
-    // MODIFICADO: setBase ahora es para el modo STOPWATCH
     public void setBase(long base) {
         if (mMode == Mode.STOPWATCH) {
             mBaseTime = base;
@@ -76,7 +77,7 @@ public class Chronometer extends TextView {
         if (mMode == Mode.TIMER) {
             mCountdownInterval = millisInFuture;
             // Inicializamos el texto con la duración total
-            updateText(SystemClock.elapsedRealtime());
+            reset();
         }
     }
 
@@ -110,8 +111,10 @@ public class Chronometer extends TextView {
         stop();
         mTimeValue = 0;
         if (mMode == Mode.TIMER) {
+            mTimeValue = mCountdownInterval;
             mFutureTime = SystemClock.elapsedRealtime() + mCountdownInterval;
         } else {
+            mTimeValue = 0;
             mBaseTime = SystemClock.elapsedRealtime();
         }
         updateText(SystemClock.elapsedRealtime());
@@ -206,7 +209,6 @@ public class Chronometer extends TextView {
         }
     }
 
-    // MODIFICADO: getTimeElapsed ahora devuelve el valor de tiempo actual (hacia adelante o atrás)
     public long getCurrentTime() {
         return mTimeValue;
     }

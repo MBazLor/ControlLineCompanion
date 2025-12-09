@@ -91,9 +91,12 @@ public class TimedFlightFragment extends Fragment implements Chronometer.OnChron
         btn_motorStop = view.findViewById(R.id.btn_motorStop);
         sld_throttle = view.findViewById(R.id.sld_throttle);
         chrono = view.findViewById(R.id.chronometer2);
+        chrono.setMode(Chronometer.Mode.TIMER);
+
 
         if(chrono != null);
-            chrono.setMillisInFuture(300000L);
+            chrono.setCountdownDuration(300000L);
+
 
 
 
