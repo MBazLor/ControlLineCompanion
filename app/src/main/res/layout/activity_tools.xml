@@ -8,7 +8,7 @@
     android:keepScreenOn="true"
     android:fitsSystemWindows="true"
     android:background="#3E3D3D"
-    tools:context=".tools.ToolsActivity">
+    tools:context=".controller.ToolsActivity">
 
     <TextView
         android:id="@+id/tv_button_speedo"

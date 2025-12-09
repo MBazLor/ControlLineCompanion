@@ -1,4 +1,4 @@
-package com.mbl.controllinecompanion.tools;
+package com.mbl.controllinecompanion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
-import com.mbl.controllinecompanion.MainActivity;
-import com.mbl.controllinecompanion.R;
 import com.mbl.controllinecompanion.databinding.ActivitySplashScreenBinding;
 
 import java.util.Timer;

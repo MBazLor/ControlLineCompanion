@@ -1,4 +1,4 @@
-package com.mbl.controllinecompanion.fragments;
+package com.mbl.controllinecompanion.controller.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;

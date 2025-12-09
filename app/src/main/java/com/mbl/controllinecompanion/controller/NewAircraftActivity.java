@@ -105,7 +105,7 @@ public class NewAircraftActivity extends AppCompatActivity {
     }
     private void saveAircraft(){
         if(aircraft == null){
-            Aircraft aircraft = new Aircraft();
+            aircraft = new Aircraft();
             FlightConfig fc = new FlightConfig();
             aircraft.setFlightConfig(fc);
         }

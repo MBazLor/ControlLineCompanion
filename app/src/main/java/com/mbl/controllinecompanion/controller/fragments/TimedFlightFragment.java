@@ -1,4 +1,4 @@
-package com.mbl.controllinecompanion.fragments;
+package com.mbl.controllinecompanion.controller.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -73,9 +73,6 @@ public class TimedFlightFragment extends Fragment implements Chronometer.OnChron
             IAircraftDAO aircraftDAO = new AircraftDaoSQLite(this.getContext());
             aircraft = aircraftDAO.getAircraft(selectedAircraftId);
         }
-
-
-
     }
 
     @Override

@@ -1,11 +1,10 @@
-package com.mbl.controllinecompanion.fragments;
+package com.mbl.controllinecompanion.controller.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.mbl.controllinecompanion.MainActivity;
 import com.mbl.controllinecompanion.R;
 import com.mbl.controllinecompanion.databinding.FragmentFirstBinding;
-import com.mbl.controllinecompanion.tools.ToolsActivity;
+import com.mbl.controllinecompanion.controller.ToolsActivity;
 
 public class FirstFragment extends Fragment {
 

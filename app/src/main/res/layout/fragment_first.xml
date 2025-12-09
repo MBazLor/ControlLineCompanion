@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#525050"
     android:elevation="6dp"
-    tools:context=".fragments.FirstFragment">
+    tools:context=".controller.fragments.FirstFragment">
 
     <TextView
         android:id="@+id/button_fly"

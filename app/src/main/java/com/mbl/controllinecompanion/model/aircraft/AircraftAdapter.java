@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mbl.controllinecompanion.MainActivity;
 import com.mbl.controllinecompanion.controller.NewAircraftActivity;
 import com.mbl.controllinecompanion.R;
-import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
+import com.mbl.controllinecompanion.controller.fragments.OnAircraftSelectedListener;
 import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;
 import com.mbl.controllinecompanion.model.FlightConfig.FlightConfigDaoSQLite;
 

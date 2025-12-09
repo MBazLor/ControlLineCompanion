@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TimedFlightFragment">
+    tools:context=".controller.fragments.TimedFlightFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -19,6 +19,8 @@
         android:background="@drawable/custom_button_background_red"
         android:gravity="center_horizontal|center_vertical"
         android:text="MOTOR STOP"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_min="100dp"
@@ -65,6 +67,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="100%"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,6 +78,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:text="0%"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,6 +91,8 @@
         android:background="@drawable/custom_button_background"
         android:gravity="center_horizontal|center_vertical"
         android:text="START"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btn_motorStop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chronometer2" />
@@ -97,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Throttle"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_start"
         app:layout_constraintTop_toBottomOf="@+id/chronometer2" />
@@ -106,6 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00:0"
+        android:textColor="@color/cardview_light_background"
         android:textSize="90dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

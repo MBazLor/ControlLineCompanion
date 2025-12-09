@@ -13,9 +13,6 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ControlLineCompanion">
 
@@ -29,18 +26,20 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".tools.ToolsActivity" />
+        <activity android:name=".controller.ToolsActivity" />
         <activity android:name=".controller.SpeedoActivity" />
         <activity
             android:name=".controller.NewAircraftActivity"
             android:exported="false" />
         <activity
-            android:name=".tools.SplashScreen"
+            android:name=".SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.ControlLineCompanion">
+            android:theme="@style/Theme.ControlLineCompanion"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,10 +47,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".controller.ManualFlight"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

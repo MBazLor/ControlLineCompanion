@@ -1,4 +1,4 @@
-package com.mbl.controllinecompanion.tools;
+package com.mbl.controllinecompanion.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.mbl.controllinecompanion.R;
-import com.mbl.controllinecompanion.controller.SpeedoActivity;
 
 public class ToolsActivity extends AppCompatActivity {
 

@@ -17,10 +17,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.mbl.controllinecompanion.fragments.AircraftListFragment;
-import com.mbl.controllinecompanion.fragments.FirstFragment;
-import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
-import com.mbl.controllinecompanion.fragments.TimedFlightFragment;
+import com.mbl.controllinecompanion.controller.fragments.AircraftListFragment;
+import com.mbl.controllinecompanion.controller.fragments.FirstFragment;
+import com.mbl.controllinecompanion.controller.fragments.OnAircraftSelectedListener;
+import com.mbl.controllinecompanion.controller.fragments.TimedFlightFragment;
 import com.mbl.controllinecompanion.model.Payload;
 import com.mbl.controllinecompanion.model.aircraft.Aircraft;
 import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;
@@ -203,7 +203,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Aircraft aircraft = AircraftDaoSQLite.getAircraft(selectedAircraftId);
             if(aircraft != null){
                 tv_plane_name.setText(aircraft.getName());
-                iv_plane_image.setImageURI(Uri.parse(aircraft.getImage()));
+                if(aircraft.getImage() != null)
+                    iv_plane_image.setImageURI(Uri.parse(aircraft.getImage()));
             }
         }
     }

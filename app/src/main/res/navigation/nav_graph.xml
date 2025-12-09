@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.mbl.controllinecompanion.fragments.FirstFragment"
+        android:name="com.mbl.controllinecompanion.controller.fragments.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.mbl.controllinecompanion.fragments.FlightModesFragment"
+        android:name="com.mbl.controllinecompanion.controller.fragments.FlightModesFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_flight_modes">
 

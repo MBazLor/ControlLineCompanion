@@ -5,7 +5,7 @@
     android:id="@+id/fragment_aircraft_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AircraftListFragment">
+    tools:context=".controller.fragments.AircraftListFragment">
 
     <TextView
         android:id="@+id/tv_button_new"
