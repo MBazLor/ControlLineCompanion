@@ -27,7 +27,7 @@ public class NewAircraftActivity extends AppCompatActivity {
 
     private IAircraftDAO aircraftDAO; //Data access object for aircraft
     Aircraft aircraft;
-    private ActivityResultLauncher<String> pickImageLauncher =
+    private final ActivityResultLauncher<String> pickImageLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(),
                     uri -> {
                         if (uri != null) {
@@ -36,7 +36,7 @@ public class NewAircraftActivity extends AppCompatActivity {
                         }
                     });
 
-    private ActivityResultLauncher<Uri> takePhotoLauncher =
+    private final ActivityResultLauncher<Uri> takePhotoLauncher =
             registerForActivityResult(new ActivityResultContracts.TakePicture(),
                     success -> {
                         if (success && fotoUri != null) {

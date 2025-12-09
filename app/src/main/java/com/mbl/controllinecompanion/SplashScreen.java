@@ -14,8 +14,8 @@ import java.util.TimerTask;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivitySplashScreenBinding binding;
+    //private AppBarConfiguration appBarConfiguration;
+    //private ActivitySplashScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
