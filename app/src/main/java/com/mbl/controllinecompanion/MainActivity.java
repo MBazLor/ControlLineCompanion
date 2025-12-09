@@ -13,15 +13,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.mbl.controllinecompanion.controller.MainActivityInterface;
 import com.mbl.controllinecompanion.fragments.AircraftListFragment;
 import com.mbl.controllinecompanion.fragments.FirstFragment;
-import com.mbl.controllinecompanion.fragments.ManualFlightFragment;
 import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
 import com.mbl.controllinecompanion.fragments.TimedFlightFragment;
 import com.mbl.controllinecompanion.model.Payload;

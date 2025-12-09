@@ -11,7 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.mbl.controllinecompanion.R;
-import com.mbl.controllinecompanion.SpeedoActivity;
+import com.mbl.controllinecompanion.controller.SpeedoActivity;
 
 public class ToolsActivity extends AppCompatActivity {
 

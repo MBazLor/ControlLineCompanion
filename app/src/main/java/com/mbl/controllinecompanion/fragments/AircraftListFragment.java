@@ -10,15 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 
-import com.mbl.controllinecompanion.NewAircraftActivity;
+import com.mbl.controllinecompanion.controller.NewAircraftActivity;
 import com.mbl.controllinecompanion.R;
 import com.mbl.controllinecompanion.model.aircraft.Aircraft;
 import com.mbl.controllinecompanion.model.aircraft.AircraftAdapter;

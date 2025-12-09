@@ -8,7 +8,7 @@
     android:keepScreenOn="true"
     android:fitsSystemWindows="true"
     android:background="#565555"
-    tools:context=".NewAircraftActivity">
+    tools:context=".controller.NewAircraftActivity">
 
     <TextView
         android:id="@+id/textView5"

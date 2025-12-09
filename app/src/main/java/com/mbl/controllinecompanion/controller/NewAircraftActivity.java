@@ -1,4 +1,4 @@
-package com.mbl.controllinecompanion;
+package com.mbl.controllinecompanion.controller;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.mbl.controllinecompanion.R;
 import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;
 import com.mbl.controllinecompanion.model.aircraft.Aircraft;
 import com.mbl.controllinecompanion.model.aircraft.AircraftDaoSQLite;

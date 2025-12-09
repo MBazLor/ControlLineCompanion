@@ -30,9 +30,9 @@
         </provider>
 
         <activity android:name=".tools.ToolsActivity" />
-        <activity android:name=".SpeedoActivity" />
+        <activity android:name=".controller.SpeedoActivity" />
         <activity
-            android:name=".NewAircraftActivity"
+            android:name=".controller.NewAircraftActivity"
             android:exported="false" />
         <activity
             android:name=".tools.SplashScreen"
@@ -49,10 +49,10 @@
             android:exported="true"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".MainActivityInterface$Speedo"
+            android:name=".controller.MainActivityInterface$Speedo"
             android:exported="false" />
         <activity
-            android:name=".ManualFlight"
+            android:name=".controller.ManualFlight"
             android:exported="false"
             android:screenOrientation="portrait" />
     </application>

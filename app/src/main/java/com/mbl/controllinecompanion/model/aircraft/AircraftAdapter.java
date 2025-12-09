@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mbl.controllinecompanion.MainActivity;
-import com.mbl.controllinecompanion.NewAircraftActivity;
+import com.mbl.controllinecompanion.controller.NewAircraftActivity;
 import com.mbl.controllinecompanion.R;
 import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
 import com.mbl.controllinecompanion.model.FlightConfig.FlightConfig;

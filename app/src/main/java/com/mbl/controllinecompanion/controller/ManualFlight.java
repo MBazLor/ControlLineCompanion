@@ -1,22 +1,6 @@
-package com.mbl.controllinecompanion;
-
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.TextView;
+package com.mbl.controllinecompanion.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.slider.Slider;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
 
 public class ManualFlight extends AppCompatActivity {
 

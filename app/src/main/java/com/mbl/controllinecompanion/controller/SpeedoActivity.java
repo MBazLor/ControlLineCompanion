@@ -1,13 +1,13 @@
-package com.mbl.controllinecompanion;
+package com.mbl.controllinecompanion.controller;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mbl.controllinecompanion.R;
 import com.mbl.controllinecompanion.tools.Chronometer;
 
 public class SpeedoActivity extends AppCompatActivity {
