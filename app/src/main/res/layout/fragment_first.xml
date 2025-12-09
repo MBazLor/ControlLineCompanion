@@ -53,7 +53,7 @@
         android:background="@drawable/custom_main_button"
         android:clickable="true"
         android:elevation="20dp"
-        android:enabled="false"
+        android:enabled="true"
         android:gravity="center_vertical"
         android:text="Tools"
         android:textAlignment="center"
