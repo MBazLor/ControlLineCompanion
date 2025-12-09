@@ -49,9 +49,6 @@
             android:exported="true"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".controller.MainActivityInterface$Speedo"
-            android:exported="false" />
-        <activity
             android:name=".controller.ManualFlight"
             android:exported="false"
             android:screenOrientation="portrait" />

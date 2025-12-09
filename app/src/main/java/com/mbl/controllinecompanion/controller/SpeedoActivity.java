@@ -26,6 +26,7 @@ public class SpeedoActivity extends AppCompatActivity {
 
         Chronometer chrono = (Chronometer) findViewById(R.id.txt_chrono);
 
+        chrono.setMode(Chronometer.Mode.STOPWATCH);
         btn_start = findViewById(R.id.btn_start);
         btn_lap = findViewById(R.id.btn_lap);
         txt_speed = findViewById(R.id.txt_speed);

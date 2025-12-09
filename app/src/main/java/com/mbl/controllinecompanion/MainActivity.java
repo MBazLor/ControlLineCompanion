@@ -17,7 +17,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.mbl.controllinecompanion.controller.MainActivityInterface;
 import com.mbl.controllinecompanion.fragments.AircraftListFragment;
 import com.mbl.controllinecompanion.fragments.FirstFragment;
 import com.mbl.controllinecompanion.fragments.OnAircraftSelectedListener;
@@ -29,7 +28,7 @@ import com.mbl.controllinecompanion.model.connection.Connection;
 import com.mbl.controllinecompanion.model.connection.ConnectionListener;
 import com.mbl.controllinecompanion.model.database.AppDatabase;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, MainActivityInterface, OnAircraftSelectedListener, TimedFlightFragment.OnMotorStopListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ConnectionListener, OnAircraftSelectedListener, TimedFlightFragment.OnMotorStopListener {
 
     TextView btn_connect, status_text,tv_plane_name;
     ImageView iv_plane_image;
