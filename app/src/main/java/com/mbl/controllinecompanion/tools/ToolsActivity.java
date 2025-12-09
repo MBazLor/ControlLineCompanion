@@ -1,6 +1,8 @@
 package com.mbl.controllinecompanion.tools;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,8 +11,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.mbl.controllinecompanion.R;
+import com.mbl.controllinecompanion.SpeedoActivity;
 
 public class ToolsActivity extends AppCompatActivity {
+
+    TextView tv_button_speedo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +27,11 @@ public class ToolsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        tv_button_speedo = findViewById(R.id.tv_button_speedo);
+        tv_button_speedo.setOnClickListener(v -> {
+            startActivity(new Intent(this, SpeedoActivity.class));
+        });
+
     }
 }

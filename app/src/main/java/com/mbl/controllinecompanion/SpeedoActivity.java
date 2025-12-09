@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mbl.controllinecompanion.tools.Chronometer;
 
-public class Speedo extends AppCompatActivity {
+public class SpeedoActivity extends AppCompatActivity {
 
     TextView btn_start, btn_lap, txt_speed, input_cable_length;
     boolean isRunning = false;

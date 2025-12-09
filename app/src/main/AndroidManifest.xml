@@ -29,6 +29,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".tools.ToolsActivity" />
+        <activity android:name=".SpeedoActivity" />
         <activity
             android:name=".NewAircraftActivity"
             android:exported="false" />
